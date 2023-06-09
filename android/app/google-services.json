@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "336334185284",
+    "project_id": "gulshanedurood-2cee7",
+    "storage_bucket": "gulshanedurood-2cee7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336334185284:android:6c4ad0aea894aea5fb2d11",
+        "android_client_info": {
+          "package_name": "com.example.gulshanedurood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkIcf4fC6ZRKeE6wUr1oLDqw_jwokREFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
