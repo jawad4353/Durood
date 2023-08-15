@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244192729491",
+    "project_id": "gulshanedurrod",
+    "storage_bucket": "gulshanedurrod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244192729491:android:95e6a4fcb17ea97276b066",
+        "android_client_info": {
+          "package_name": "com.example.gulshshanedurood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244192729491-qp0t50nojughk3kqa02rn23vg1uea65n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMH9m69iHVViuSHruDM4cbYDrM0btJ0pQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244192729491-qp0t50nojughk3kqa02rn23vg1uea65n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
