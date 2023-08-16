@@ -86,12 +86,12 @@ class _Verify_OTPState extends State<Verify_OTP> {
                             }
                             EasyLoading.show(status: 'Registering');
                             if(OTP_controller.text==widget.data['otp']){
-                            var result=await  Register_user(name: widget.data['name'],email: widget.data['email'],
-                                password: widget.data['password']);
-                            if(result){
-                              EasyLoading.dismiss();
-                              Navigator.pushReplacement(context,Myroute(login_user()));
-                            }
+                              var result=await  Register_user(name: widget.data['name'],email: widget.data['email'],
+                                  password: widget.data['password']);
+                              if(result){
+                                EasyLoading.dismiss();
+                                Navigator.pushReplacement(context,Myroute(login_user()));
+                              }
                             }
                           },child: Text('Verify'),
                         ),

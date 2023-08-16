@@ -194,8 +194,14 @@ class _View_PdfState extends State<View_Pdf> {
             } else if (!snapshot.hasData) {
               return Center(child: Text('No PDF data available'));
             } else {
-              return PDFView(
-                pdfData: snapshot.data!,
+              return InteractiveViewer(
+                minScale: 1.5,
+                maxScale: 4,
+                child: PDFView(
+                  fitEachPage: true,
+                  fitPolicy: FitPolicy.BOTH,
+                  pdfData: snapshot.data!,
+                ),
               );
             }
           },

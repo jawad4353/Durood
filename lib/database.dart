@@ -57,3 +57,26 @@ Login_user( {required password,required email}) async {
   return await s;
 }
 
+
+Login_admin( {required password,required email}) async {
+  var s=false,email_exist;
+  await FirebaseFirestore.instance.collection("admin").get().then((querySnapshot) {
+    querySnapshot.docs.forEach((result) {
+      if( result.data()['password']==password && result.data()['email']==email ){
+        EasyLoading.showSuccess('Success');
+        s=true;
+      }
+      else{
+        s=false;
+        email_exist=result.data()['email']==email;
+        if(email_exist==false){
+          EasyLoading.showError('Email not registered.\n${email}');
+        }
+        else{
+          EasyLoading.showError('Incorrect Password');
+        }
+      }
+    });
+  });
+  return await s;
+}

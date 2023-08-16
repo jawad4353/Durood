@@ -11,11 +11,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gulshshanedurood/routes.dart';
+import 'package:gulshshanedurood/user/login.dart';
 import 'package:gulshshanedurood/user/quran.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:location/location.dart';
 import 'package:intl/intl.dart';
+import '../Validations.dart';
 import '../supportingfunctions.dart';
 
 class User_home extends StatefulWidget{
@@ -70,7 +73,12 @@ class _User_homeState extends State<User_home> {
                 Text(' ${Day}/${month}/${year} ${Day_name}',style: TextStyle(color: Colors.white,fontSize: 21,fontWeight: FontWeight.w500),),
                 Text('  Lahore , Pakistan',style: TextStyle(color: Colors.white,fontSize: 17),),
               ],),
-                IconButton(onPressed: (){}, icon: Icon(Icons.notifications,color: Colors.white,))
+                IconButton(onPressed: (){
+                  EasyLoading.show(status: 'logging out');
+                  Clear_Preferences();
+                  EasyLoading.dismiss();
+                  Navigator.pushReplacement(context, Myroute(login_user()));
+                }, icon: Icon(Icons.logout,color: Colors.white,))
               ],
             ),
 
@@ -204,16 +212,6 @@ class _User_homeState extends State<User_home> {
        ],),
 
 
-
-     bottomNavigationBar: BottomNavigationBar(
-       backgroundColor: Colors.white,
-       elevation: 0,
-       items: [
-         BottomNavigationBarItem(icon: Icon(Icons.home),label: ''),
-         BottomNavigationBarItem(icon: Icon(Icons.person),label: ''),
-         BottomNavigationBarItem(icon: Icon(Icons.report),label: ''),
-       ],
-     ),
 
    );
   }

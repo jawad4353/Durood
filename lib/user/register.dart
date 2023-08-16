@@ -109,7 +109,7 @@ class _register_userState extends State<register_user> {
                             fillColor: Colors.white,
                             errorText: Name_error,
                             errorStyle: TextStyle(color:Name_error_color )
-                              ,
+                            ,
                             focusedErrorBorder:UnderlineInputBorder(borderSide: BorderSide(color: Name_error_color))  ,
                             focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Name_error_color)) ,
                             enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Name_error_color))  ,
@@ -149,14 +149,14 @@ class _register_userState extends State<register_user> {
                           controller: password,
                           keyboardType: TextInputType.visiblePassword,
 
-                        onChanged: (a){
-                          setState(() {
-                            var s=Password_Validation(a);
-                            Password_error=s[0];
-                            Password_error_color=s[1];
+                          onChanged: (a){
+                            setState(() {
+                              var s=Password_Validation(a);
+                              Password_error=s[0];
+                              Password_error_color=s[1];
 
-                          });
-                        },
+                            });
+                          },
                           decoration: InputDecoration(
                             filled: true,
                             hintMaxLines: 1,
@@ -172,7 +172,7 @@ class _register_userState extends State<register_user> {
                             enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color:  Password_error_color))  ,
                             errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Password_error_color)) ,
                           ),
-                          ),
+                        ),
 
 
 
@@ -208,7 +208,7 @@ class _register_userState extends State<register_user> {
                               EasyLoading.showInfo('${s1[0]}');
                               return;
                             }
-                         var result=await Email_Duplicacy(email:email.text,password:password.text);
+                            var result=await Email_Duplicacy(email:email.text,password:password.text);
 
                             dataa['name']=name.text;
                             dataa['email']=email.text;
@@ -216,9 +216,9 @@ class _register_userState extends State<register_user> {
                             dataa['otp']=otpq;
                             if(!result){
                               EasyLoading.dismiss();
-                               var s=Send_mail(name: name.text,receiver_email: email.text, OTP:otpq);
+                              var s=Send_mail(name: name.text,receiver_email: email.text, OTP:otpq);
 
-                             print(dataa);
+                              print(dataa);
                               Navigator.push(context, Myroute(Verify_OTP(data: dataa)));
                             }
 

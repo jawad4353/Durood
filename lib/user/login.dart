@@ -12,6 +12,7 @@ import 'package:gulshshanedurood/user/register.dart';
 import 'package:lottie/lottie.dart';
 
 import '../Validations.dart';
+import '../admin/adminlogin.dart';
 import '../database.dart';
 import '../forgotpassword.dart';
 import '../routes.dart';
@@ -92,10 +93,13 @@ class _login_userState extends State<login_user> {
 
 
                     Row(
-                       mainAxisAlignment: MainAxisAlignment.end,
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
                          TextButton(onPressed: (){
-                           Navigator.push(context,Myroute(forgotpassword()));
+                           Navigator.push(context,Myroute(adminlogin()));
+                         }, child: Text('Admin')),
+                         TextButton(onPressed: (){
+                           Navigator.push(context,Myroute(forgotpassword(user_type: 'users',)));
                          }, child: Text('Forgot Password?')),
                        ],
                      ),
@@ -123,7 +127,7 @@ class _login_userState extends State<login_user> {
                      var result=await    Login_user(email: email.text,password: password.text);
                          if(result){
                            Set_Shared_Preference(email: email.text,password: password.text,user_type: 'user');
-                           Navigator.push(context, Myroute(User_home()));
+                           Navigator.pushReplacement(context, Myroute(User_home()));
                          }
 
 

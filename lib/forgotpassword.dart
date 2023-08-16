@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:gulshshanedurood/Validations.dart';
+import 'package:gulshshanedurood/admin/adminlogin.dart';
 import 'package:gulshshanedurood/routes.dart';
 import 'package:gulshshanedurood/user/login.dart';
 
@@ -15,13 +16,15 @@ import 'package:gulshshanedurood/user/login.dart';
 
 
 class forgotpassword extends StatefulWidget {
+  var user_type;
+  forgotpassword({required this.user_type});
   @override
   State<forgotpassword> createState() => _forgotpasswordState();
 }
 
 class _forgotpasswordState extends State<forgotpassword> {
   var Otp_sent=false,email=new TextEditingController(),password=new TextEditingController(),
-  otp=new TextEditingController(),OTP,Name;
+      otp=new TextEditingController(),OTP,Name;
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +60,15 @@ class _forgotpasswordState extends State<forgotpassword> {
                       width: size.width*0.8,
                       child: ListView(children: [
                         if(!Otp_sent)
-                        TextField(
-                          controller:email,
-                          keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                            hintText: 'Email',
-                            prefixIcon: Icon(Icons.mail),
-                            filled: true,
-                            fillColor: Colors.white,
-                            suffixIcon: ElevatedButton(child: Text('Get Code'),onPressed: () async {
+                          TextField(
+                            controller:email,
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                              hintText: 'Email',
+                              prefixIcon: Icon(Icons.mail),
+                              filled: true,
+                              fillColor: Colors.white,
+                              suffixIcon: ElevatedButton(child: Text('Get Code'),onPressed: () async {
 
                                 EasyLoading.show(status: 'Checking info');
                                 if(email.text.isEmpty){
@@ -74,7 +77,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                                 }
 
                                 OTP=Generate_OTP();
-                                await FirebaseFirestore.instance.collection("users").get().then((querySnapshot) {
+                                await FirebaseFirestore.instance.collection("${widget.user_type}").get().then((querySnapshot) {
                                   querySnapshot.docs.forEach((result) {
                                     if(  result.data()['email']==email.text ){
                                       Name=result.data()['name'];
@@ -88,76 +91,82 @@ class _forgotpasswordState extends State<forgotpassword> {
                                 }
                                 Send_mail(name: Name, OTP: OTP, receiver_email: email.text);
                                 EasyLoading.showSuccess('OTP code sent to your email');
-                            setState(() {
-                              Otp_sent=true;
-                            });
-                            },),
+                                setState(() {
+                                  Otp_sent=true;
+                                });
+                              },),
 
+                            ),
                           ),
-                        ),
                         if(Otp_sent)
-                        TextField(
-                          controller:otp,
-                          decoration: InputDecoration(
-                            filled: true,
-                            hintMaxLines: 1,
-                            fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.sms),
-                            hintText: 'OTP',
+                          TextField(
+                            controller:otp,
+                            decoration: InputDecoration(
+                              filled: true,
+                              hintMaxLines: 1,
+                              fillColor: Colors.white,
+                              prefixIcon: Icon(Icons.sms),
+                              hintText: 'OTP',
 
 
+                            ),
                           ),
-                        ),
                         if(Otp_sent)
-                        TextField(
-                          controller:password,
-                          decoration: InputDecoration(
-                            filled: true,
-                            hintMaxLines: 1,
-                            fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.vpn_key_sharp),
-                            hintText: 'New Password',
-                            suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye),onPressed: (){},),
+                          TextField(
+                            controller:password,
+                            decoration: InputDecoration(
+                              filled: true,
+                              hintMaxLines: 1,
+                              fillColor: Colors.white,
+                              prefixIcon: Icon(Icons.vpn_key_sharp),
+                              hintText: 'New Password',
+                              suffixIcon: IconButton(icon: Icon(Icons.remove_red_eye),onPressed: (){},),
 
+                            ),
                           ),
-                        ),
 
 
 
-                      if(Otp_sent)
-                        ElevatedButton(
-                          onPressed: () async {
-                            EasyLoading.show(status: 'processing');
-                            if(otp.text.isEmpty){
-                              EasyLoading.showInfo('Enter OTP code sent to your email');
-                              return;
-                            }
-                            if(otp.text!=OTP){
-                              EasyLoading.showInfo('Incorrect OTP');
-                              return;
-                            }
-                            if(password.text.isEmpty){
-                              EasyLoading.showInfo('Enter new password');
-                              return;
-                            }
-                            var result=Password_Validation(password.text);
-                            if(result[1]==Colors.red){
-                              EasyLoading.showInfo('${result[0]}');
-                              return;
-                            }
-                           try{
-                            await FirebaseFirestore.instance.collection("users").doc(email.text).update({'password':password.text}).whenComplete(() => EasyLoading.showSuccess('Password Updated '));
+                        if(Otp_sent)
+                          ElevatedButton(
+                            onPressed: () async {
+                              EasyLoading.show(status: 'processing');
+                              if(otp.text.isEmpty){
+                                EasyLoading.showInfo('Enter OTP code sent to your email');
+                                return;
+                              }
+                              if(otp.text!=OTP){
+                                EasyLoading.showInfo('Incorrect OTP');
+                                return;
+                              }
+                              if(password.text.isEmpty){
+                                EasyLoading.showInfo('Enter new password');
+                                return;
+                              }
+                              var result=Password_Validation(password.text);
+                              if(result[1]==Colors.red){
+                                EasyLoading.showInfo('${result[0]}');
+                                return;
+                              }
+                              try{
+                                await FirebaseFirestore.instance.collection("${widget.user_type}").doc(email.text).update({'password':password.text}).whenComplete(() => EasyLoading.showSuccess('Password Updated '));
 
-                           }
-                            catch(e){
-                              EasyLoading.showError('Error Updating Password');
-                              return;
-                            }
-                            Navigator.pushReplacement(context, Myroute(login_user()));
+                              }
+                              catch(e){
+                                EasyLoading.showError('Error Updating Password');
+                                return;
+                              }
+                              if(widget.user_type=='admin'){
+                                Navigator.pushReplacement(context, Myroute(adminlogin()));
+                              }
+                              else{
+                                Navigator.pushReplacement(context, Myroute(login_user()));
+                              }
 
 
-                          },child: Text('Reset'),
-                        ),
+
+                            },child: Text('Reset'),
+                          ),
 
 
                       ],),
